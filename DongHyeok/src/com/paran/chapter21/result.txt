@@ -1,0 +1,18 @@
+======================= Student Info =======================
+Name => Peter, Stu ID => 201110002, Foreign ID => 900201-5
+Class Rank =>1
+Name => Sara, Stu ID => 201110008, Foreign ID => 901130-5
+Class Rank =>2
+Name => Kim, Stu ID => 201110001, Residence ID => 900101-1
+Class Rank =>3
+Name => John, Stu ID => 201110005, Foreign ID => 900608-6
+Class Rank =>4
+Name => Choi, Stu ID => 201110006, Residence ID => 900920-2
+Class Rank =>5
+Name => Jack, Stu ID => 201110007, Foreign ID => 901011-6
+Class Rank =>6
+Name => Lee, Stu ID => 201110003, Residence ID => 900305-2
+Class Rank =>7
+Name => Park, Stu ID => 201110004, Residence ID => 900319-1
+Class Rank =>8
+========================= Info End =========================
