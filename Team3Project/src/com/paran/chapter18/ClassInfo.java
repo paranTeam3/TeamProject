@@ -7,25 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassInfo {
-	int count;
-
-	String stuId;
-	String name;
-	String code;
-	int korScore;
-	int engScore;
-
 	List<Student> stuList = new ArrayList<Student>();
 
 	public void insertStudent() {
+		String stuId;
+		String name;
+		String code;
+		int korScore;
+		int engScore;
+		
 		String fileName = "학생리스트.txt";
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("D:\\dg\\Test\\" + fileName));
 			String s;
 			
 			while ((s = in.readLine()) != null) {
-				count++;
-
 				String[] split = s.split("\t");
 
 				stuId = split[0].trim();
@@ -92,7 +88,7 @@ abstract class Student {
 	}
 
 	public void setAvgScore() {
-		this.avgScore = totScore / 2;
+		this.avgScore = totScore / 2.0f;
 	}
 
 	public void setKorScore(int korScore) {
@@ -137,13 +133,8 @@ class DomeStudent extends Student {
 	}
 
 	public void showInfo() {
-		System.out.print("name : " + getName());
-		System.out.print("\t stuId : " + getStuId());
-		System.out.print("\t korScore : " + getKorScore());
-		System.out.print("\t engScore : " + getEngScore());
-		System.out.print("\t totScore : " + getTotScore());
-		System.out.print("\t avgScore : " + getAvgScore());
-		System.out.print("\t resiId : " + getResiId());
+		System.out.printf("학번 : %5s / 이름 : %5s / 국어점수 : %3d / 영어점수 : %3d / 총점 : %4d / 평균 : %3.2f / ",getStuId(), getName(), getKorScore(), getEngScore(), getTotScore(), getAvgScore());
+		System.out.print("resiId : " + getResiId());
 		System.out.println();
 	}
 }
@@ -171,27 +162,73 @@ class ForeStudent extends Student {
 	}
 
 	public void showInfo() {
-		System.out.print("name : " + getName());
-		System.out.print("\t stuId : " + getStuId());
-		System.out.print("\t korScoree : " + getKorScore());
-		System.out.print("\t engScoree : " + getEngScore());
-		System.out.print("\t totScoree : " + getTotScore());
-		System.out.print("\t avgScoree : " + getAvgScore());
-		System.out.print("\t foreignId : " + getForeignId());
+		System.out.printf("학번 : %5s / 이름 : %5s / 국어점수 : %3d / 영어점수 : %3d / 총점 : %4d / 평균 : %3.2f / ",getStuId(), getName(), getKorScore(), getEngScore(), getTotScore(), getAvgScore());
+		System.out.print("foreignId : " + getForeignId());
 		System.out.println();
 	}
 }
 
 class RankUtil {
-	
+	public void rankCheck(ClassInfo infoStudent) {
+		Student[] stuR = new Student[infoStudent.stuList.size()];
+
+		for (int i = 0; i < stuR.length; i++) {
+			stuR[i] = infoStudent.stuList.get(i);
+		}
+
+		int size = stuR.length;
+		int max;
+		Student temp;
+
+		for (int i = 0; i < size - 1; i++) {
+			max = i;
+			for (int j = i + 1; j < size; j++) {
+				if (stuR[max].getAvgScore() < stuR[j].getAvgScore()) {
+					max = j;
+				}
+			}
+			temp = stuR[max];
+			stuR[max] = stuR[i];
+			stuR[i] = temp;
+		}
+		for (int i = 0; i < stuR.length; i++) {
+			System.out.print("rank : " + (i + 1) + "\t");
+			stuR[i].showInfo();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class StuRank {
 	Student[] stuR;
 
 	public void insertArr(ClassInfo infoStudent) {
-		stuR = new Student[infoStudent.count];
+		//stuR = new Student[infoStudent.count];
 
 		for (int i = 0; i < stuR.length; i++) {
 			stuR[i] = infoStudent.stuList.get(i);
