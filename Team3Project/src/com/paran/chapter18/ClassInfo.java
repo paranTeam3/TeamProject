@@ -92,7 +92,7 @@ abstract class Student {
 	}
 
 	public void setAvgScore() {
-		this.avgScore = totScore / 2;
+		this.avgScore = totScore / 2.0f;
 	}
 
 	public void setKorScore(int korScore) {
@@ -137,13 +137,8 @@ class DomeStudent extends Student {
 	}
 
 	public void showInfo() {
-		System.out.print("name : " + getName());
-		System.out.print("\t stuId : " + getStuId());
-		System.out.print("\t korScore : " + getKorScore());
-		System.out.print("\t engScore : " + getEngScore());
-		System.out.print("\t totScore : " + getTotScore());
-		System.out.print("\t avgScore : " + getAvgScore());
-		System.out.print("\t resiId : " + getResiId());
+		System.out.printf("학번 : %5s / 이름 : %5s / 국어점수 : %3d / 영어점수 : %3d / 총점 : %4d / 평균 : %3.2f / ",getStuId(), getName(), getKorScore(), getEngScore(), getTotScore(), getAvgScore());
+		System.out.print("resiId : " + getResiId());
 		System.out.println();
 	}
 }
@@ -171,13 +166,8 @@ class ForeStudent extends Student {
 	}
 
 	public void showInfo() {
-		System.out.print("name : " + getName());
-		System.out.print("\t stuId : " + getStuId());
-		System.out.print("\t korScoree : " + getKorScore());
-		System.out.print("\t engScoree : " + getEngScore());
-		System.out.print("\t totScoree : " + getTotScore());
-		System.out.print("\t avgScoree : " + getAvgScore());
-		System.out.print("\t foreignId : " + getForeignId());
+		System.out.printf("학번 : %5s / 이름 : %5s / 국어점수 : %3d / 영어점수 : %3d / 총점 : %4d / 평균 : %3.2f / ",getStuId(), getName(), getKorScore(), getEngScore(), getTotScore(), getAvgScore());
+		System.out.print("foreignId : " + getForeignId());
 		System.out.println();
 	}
 }
