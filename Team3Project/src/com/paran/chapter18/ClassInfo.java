@@ -7,25 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassInfo {
-	int count;
-
-	String stuId;
-	String name;
-	String code;
-	int korScore;
-	int engScore;
-
 	List<Student> stuList = new ArrayList<Student>();
 
 	public void insertStudent() {
+		String stuId;
+		String name;
+		String code;
+		int korScore;
+		int engScore;
+		
 		String fileName = "학생리스트.txt";
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("D:\\dg\\Test\\" + fileName));
 			String s;
 			
 			while ((s = in.readLine()) != null) {
-				count++;
-
 				String[] split = s.split("\t");
 
 				stuId = split[0].trim();
@@ -173,7 +169,33 @@ class ForeStudent extends Student {
 }
 
 class RankUtil {
-	
+	public void rankCheck(ClassInfo infoStudent) {
+		Student[] stuR = new Student[infoStudent.stuList.size()];
+
+		for (int i = 0; i < stuR.length; i++) {
+			stuR[i] = infoStudent.stuList.get(i);
+		}
+
+		int size = stuR.length;
+		int max;
+		Student temp;
+
+		for (int i = 0; i < size - 1; i++) {
+			max = i;
+			for (int j = i + 1; j < size; j++) {
+				if (stuR[max].getAvgScore() < stuR[j].getAvgScore()) {
+					max = j;
+				}
+			}
+			temp = stuR[max];
+			stuR[max] = stuR[i];
+			stuR[i] = temp;
+		}
+		for (int i = 0; i < stuR.length; i++) {
+			System.out.print("rank : " + (i + 1) + "\t");
+			stuR[i].showInfo();
+		}
+	}
 }
 
 
@@ -181,7 +203,7 @@ class StuRank {
 	Student[] stuR;
 
 	public void insertArr(ClassInfo infoStudent) {
-		stuR = new Student[infoStudent.count];
+		//stuR = new Student[infoStudent.count];
 
 		for (int i = 0; i < stuR.length; i++) {
 			stuR[i] = infoStudent.stuList.get(i);

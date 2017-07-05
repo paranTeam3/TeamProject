@@ -9,8 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class NewClassInfo {
-	List<Student> stuList = new ArrayList<Student>();
-	static List<Student> stuRank = new ArrayList<Student>();
+	static List<Student> stuList = new ArrayList<Student>();
 	
 	public void insertStudent() {
 		String stuId;
@@ -52,18 +51,12 @@ public class NewClassInfo {
 		infoStudent.insertStudent();
 		sRank.showRank(infoStudent);
 		
-		// 정렬안된 자료
-		for (Student temp : stuRank) {
-			temp.showInfo();
-		}
-		
-		System.out.println("==========================================================================");
-		
 		// 정렬된 자료
 		int count = 1;
-		for (Student temp : stuRank) {
+		for (Student temp : stuList) {
 			System.out.println("Rank : "+count);
 			temp.showInfo();
+			System.out.println();
 			count++;
 		}
 	}
@@ -182,9 +175,7 @@ class ForeStudent extends Student {
 
 class RankUtil {
 	public void showRank(NewClassInfo infoStudent) {
-		infoStudent.stuRank = infoStudent.stuList;
-		Collections.sort(infoStudent.stuRank, new AscRank());
-		
+		Collections.sort(infoStudent.stuList, new AscRank());
 	}
 }
 
@@ -192,9 +183,9 @@ class AscRank implements Comparator<Student> {
 	@Override
 	public int compare(Student o1, Student o2) {
 		if(o1.getAvgScore() > o2.getAvgScore())
-			return 1;
-		else if(o1.getAvgScore() < o2.getAvgScore())
 			return -1;
+		else if(o1.getAvgScore() < o2.getAvgScore())
+			return 1;
 		else
 			return 0;
 	}
