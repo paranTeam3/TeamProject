@@ -14,6 +14,13 @@ import java.util.List;
 public class EduInfoManager {
 	public static void main(String[] args) throws IOException {
 		StudentReadWriter eduInfo = new StudentReadWriter();
+		
+		for (int i = 0 ; i < eduInfo.schoolList.size(); i++) {
+			for (int j = 0 ; j < eduInfo.schoolList.get(i).getClassList().size(); j++) {
+				GradeRank.gradeRankByMidTerm(eduInfo.schoolList.get(i).getClassList().get(j));
+			}
+		}
+		
 		eduInfo.writeToFile();
 	}
 }
@@ -62,7 +69,6 @@ class StudentReadWriter {
 		String outputString;
 		for (int i = 0 ; i < schoolList.size(); i++) {
 			for (int j = 0 ; j < schoolList.get(i).getClassList().size(); j++) {
-				GradeRank.gradeClassRank(schoolList.get(i).getClassList().get(j));
 				outputFile = new BufferedWriter
 						(new FileWriter(schoolList.get(i).getClassList().get(j).getClassFolderDirs().getPath() + "\\ClassInfo.txt"));
 				outputString = "";
@@ -72,6 +78,19 @@ class StudentReadWriter {
 				outputFile.write(outputString);
 				outputFile.close();
 			}
+		}
+		for (int i = 0 ; i < schoolList.size(); i++) {
+				outputFile = new BufferedWriter
+						(new FileWriter(schoolList.get(i).getSchoolFolderDirs().getPath() + "\\SchoolInfo.txt"));
+				outputString = "";
+				for (int j = 0 ; j < schoolList.get(i).getClassList().size(); j++) {
+					outputString += schoolList.get(i).getClassList().get(j).getYears() + " - " + schoolList.get(i).getClassList().get(j).getClassNo() + "\r\n";
+					for (int k = 0 ; k < schoolList.get(i).getClassList().get(j).getStuList().size(); k++) {
+						outputString += schoolList.get(i).getClassList().get(j).getStuList().get(k).showInfo();
+					}
+				}
+				outputFile.write(outputString);
+				outputFile.close();
 		}
 		
 	}
@@ -199,7 +218,9 @@ class School {
 	public int getSchoolLevel() {
 		return schoolLevel;
 	}
-	
+	public File getSchoolFolderDirs() {
+		return schoolFolderDirs;
+	}
 }
 
 class ClassInfo {
@@ -402,24 +423,35 @@ class Subject {
 	}
 }
 
-class GradeRank {
-	static void gradeClassRank(ClassInfo infoStudent) {
-		Collections.sort(infoStudent.getStuList(), new AscRank());
+class GradeRank  {
+	static void gradeRankByMidTerm(ClassInfo infoStudent) {
+		Collections.sort(infoStudent.getStuList(), new Comparator<Student>() {
+			@Override
+			public int compare(Student stu1, Student stu2) {
+				// TODO Auto-generated method stub
+				if(stu1.getTermResult().get(0).getAvgScore() > stu2.getTermResult().get(0).getAvgScore())
+					return -1;
+				else if(stu1.getTermResult().get(0).getAvgScore() < stu2.getTermResult().get(0).getAvgScore())
+					return 1;
+				else
+					return 0;
+			}
+			
+		});
 	}
-	void gradeSchoolRank(Student stu) {
-		
+	static void gradeRankByFinalTerm(ClassInfo infoStudent) {
+		Collections.sort(infoStudent.getStuList(), new Comparator<Student>() {
+			@Override
+			public int compare(Student stu1, Student stu2) {
+				// TODO Auto-generated method stub
+				if(stu1.getTermResult().get(1).getAvgScore() > stu2.getTermResult().get(1).getAvgScore())
+					return -1;
+				else if(stu1.getTermResult().get(1).getAvgScore() < stu2.getTermResult().get(1).getAvgScore())
+					return 1;
+				else
+					return 0;
+			}
+			
+		});
 	}
-}
-
-class AscRank implements Comparator<Student> {
-	@Override
-	public int compare(Student stu1, Student stu2) {
-		if(stu1.getTermResult().get(0).getAvgScore() > stu2.getTermResult().get(0).getAvgScore())
-			return -1;
-		else if(stu1.getTermResult().get(0).getAvgScore() < stu2.getTermResult().get(0).getAvgScore())
-			return -1;
-		else
-			return 0;
-	}
-	
 }
