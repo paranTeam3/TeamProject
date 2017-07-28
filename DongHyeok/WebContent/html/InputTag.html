@@ -7,10 +7,11 @@
 function validate() {
 	var inputForm = document.getElementById("inputForm").getElementsByTagName("INPUT");
 	var radioValid = false;
+	var checkNum = 0;
 	
 	for (var i = 0 ; i < inputForm.length ; i++) {
 		if (inputForm[i].dataset.validation == "y") {
-			else if (inputForm[i].type == "radio") {
+			if (inputForm[i].type == "radio") {
 				var radioButton = document.getElementsByName(inputForm[i].name);
 				for (var j = 0 ; j < radioButton.length ; j++) {
 					if (radioButton[j].checked) {
@@ -22,7 +23,20 @@ function validate() {
 					alert("Please Select Radio Button");
 					return;
 				}
-				i += radioButton.length;
+				i += radioButton.length - 1;
+			}
+			else if (inputForm[i].type == "checkbox") {
+				var checkBox = document.getElementsByName(inputForm[i].name);
+				for (var j = 0 ; j < checkBox.length ; j++) {
+					if (checkBox[j].checked) {
+						checkNum += 1;
+					}
+				}
+				if (checkNum < 1) {
+					alert("Please Check One or More Option");
+					return;
+				}
+				i += checkBox.length - 1;
 			}
 			else if (inputForm[i].value == "") {
 				alert("Please Fill " + inputForm[i].name + " Value\n" + inputForm[i].placeholder);
@@ -43,7 +57,11 @@ function validate() {
 		name:<br>
 		<input type="text" id="lName" name="Last name" placeholder="ex) Mouse" data-validation="y"><br> Nation:<br>
 		<input type="radio" name="nation" value="native" data-validation="y">Native
-		<input type="radio" name="nation" value="foreign"data-validation="y">Foreign<br>
+		<input type="radio" name="nation" value="foreign" data-validation="y">Foreign<br>
+		Select One or More Option<br>
+		<input type="checkbox" name="hobby" value="hobby1" data-validation="y">Hobby1<br>
+		<input type="checkbox" name="hobby" value="hobby2" data-validation="y">Hobby2<br>
+		<input type="checkbox" name="hobby" value="hobby3" data-validation="y">Hobby3<br>
 		Favorite Color:<br>
 		<input type="color" id="coloring" value="#1342A8"><br>
 		E-m@il:<br>
@@ -54,6 +72,5 @@ function validate() {
 		<input type="button" onclick="validate()" value="Validate">
 		<input type="submit" value="Submit"> <input type="reset">
 	</form>
-
 </body>
 </html>
