@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Input Tag</title>
+<script>
+function validate() {
+	var inputForm = document.getElementById("inputForm").getElementsByTagName("INPUT");
+	var radioValid = false;
+	
+	for (var i = 0 ; i < inputForm.length ; i++) {
+		if (inputForm[i].dataset.validation == "y") {
+			if (inputForm[i].type == ("button" | "submit" | "reset")){
+				continue;
+			}
+			else if (inputForm[i].type == "radio") {
+				var radioButton = document.getElementsByName(inputForm[i].name);
+				for (var j = 0 ; j < radioButton.length ; j++) {
+					if (radioButton[j].checked) {
+						radioValid = true;
+						break;
+					}
+				}
+				if (!radioValid) {
+					alert("Please Select Radio Button");
+					return;
+				}
+				i += radioButton.length;
+			}
+			else if (inputForm[i].value == "") {
+				alert("Please Fill " + inputForm[i].name + " Value\n" + inputForm[i].placeholder);
+				inputForm[i].focus();
+				return;
+			}
+		}
+		
+	}
+	alert("Validation Complete!");
+}
+</script>
+</head>
+<body>
+<form id="inputForm" action="/action_page.php">
+First name:<br>
+<input type="text" id="fName" name="First name" placeholder="ex) Mickey" data-validation="y"><br>
+Last name:<br>
+<input type="text" id="lName" name="Last name" placeholder="ex) Mouse" data-validation="y"><br>
+Nation:<br>
+<input type="radio" name="nation" value="native" data-validation="y"> Native
+<input type="radio" name="nation" value="foreign" data-validation="y"> Foreign<br>
+Favorite Color:<br>
+<input type="color" id="coloring" value="#1342A8"><br>
+E-m@il:<br>
+<input type="email" name="E-Mail" placeholder="ex) username@si.te" data-validation="y"><br>
+Number:<br>
+<input type="number" name="Number" placeholder="0 ~ 100" min="0" max="100" data-validation="y">
+<br>
+<br>
+Button:<br>
+<input type="button" onclick="validate()" value = "Validate">
+<input type="submit" value="Submit">
+<input type="reset" >
+</form> 
+
+</body>
+</html>
